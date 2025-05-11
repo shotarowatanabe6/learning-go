@@ -9,11 +9,16 @@ import (
 
 type Config struct {
 	Common *CommonConfig `mapstructure:"common"`
+	Logger *LoggerConfig `mapstructure:"logger"`
 	Server *ServerConfig `mapstructure:"server"`
 }
 
 type CommonConfig struct {
 	Debug bool `mapstructure:"debug"`
+}
+
+type LoggerConfig struct {
+	Level string `mapstructure:"level"`
 }
 
 type ServerConfig struct {
@@ -34,6 +39,9 @@ func NewConfig(filePath string) (*Config, error) {
 	return &Config{
 		Common: &CommonConfig{
 			Debug: viper.GetBool("common.debug"),
+		},
+		Logger: &LoggerConfig{
+			Level: viper.GetString("logger.level"),
 		},
 		Server: &ServerConfig{
 			Port: viper.GetInt("server.port"),

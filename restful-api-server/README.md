@@ -13,6 +13,7 @@ Go の学習のため、高機能な RESTful API サーバーを作成する。
 
 - github.com/spf13/viper を使用したことがなかったため使用した。
 - gin などのフレームワークは今後使用するかもしれないが、まずは net/http パッケージでサーバーを構築する。
+- https://github.com/rs/zerolog を使用したことがなかったため使用した。
 
 ## 要件
 
