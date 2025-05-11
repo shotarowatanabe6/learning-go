@@ -2,24 +2,25 @@ package api
 
 import (
 	"fmt"
-
+	"net/http"
 	"restful-api-server/internal/api/handler"
-
-	"github.com/gin-gonic/gin"
 )
 
 type API struct {
-	config  *Config
-	handler *gin.Engine
+	config *Config
+	server *http.Server
 }
 
 func NewAPI(config *Config) *API {
 	return &API{
-		config:  config,
-		handler: handler.NewHandler(),
+		config: config,
+		server: handler.NewServer(config.Server.Port),
 	}
 }
 
-func (a *API) Run() {
-	a.handler.Run(fmt.Sprintf(":%d", a.config.Server.Port))
+func (a *API) Run() error {
+	if err := a.server.ListenAndServe(); err != nil {
+		return fmt.Errorf("failed to start server: %w", err)
+	}
+	return nil
 }

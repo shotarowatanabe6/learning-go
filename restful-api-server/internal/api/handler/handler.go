@@ -1,17 +1,21 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
-
-	"github.com/gin-gonic/gin"
 )
 
-func NewHandler() *gin.Engine {
-	router := gin.Default()
+func NewServer(port int) *http.Server {
+	server := &http.Server{
+		Addr:    fmt.Sprintf(":%s", port),
+		Handler: nil,
+	}
+	http.HandleFunc("/", helloWorld)
 
-	router.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"message": "Hello, World!"})
-	})
+	return server
+}
 
-	return router
+func helloWorld(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Hello, World!"))
 }
