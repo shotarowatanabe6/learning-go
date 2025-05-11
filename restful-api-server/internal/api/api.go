@@ -1,7 +1,7 @@
 package api
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 	"restful-api-server/internal/api/handler"
 )
@@ -18,9 +18,10 @@ func NewAPI(config *Config) *API {
 	}
 }
 
-func (a *API) Run() error {
-	if err := a.server.ListenAndServe(); err != nil {
-		return fmt.Errorf("failed to start server: %w", err)
+func (a *API) Run() {
+	log.Printf("starting server on port %d", a.config.Server.Port)
+	err := a.server.ListenAndServe()
+	if err != nil {
+		log.Fatalf("server error: %v", err)
 	}
-	return nil
 }

@@ -2,6 +2,7 @@ package api
 
 import (
 	"fmt"
+	"path"
 
 	"github.com/spf13/viper"
 )
@@ -20,9 +21,11 @@ type ServerConfig struct {
 }
 
 func NewConfig(filePath string) (*Config, error) {
-	viper.SetConfigName(filePath)
+	configName := path.Base(filePath)
+	viper.SetConfigName(configName)
 	viper.SetConfigType("toml")
-	viper.AddConfigPath(filePath)
+	configDir := path.Dir(filePath)
+	viper.AddConfigPath(configDir)
 
 	if err := viper.ReadInConfig(); err != nil {
 		return nil, fmt.Errorf("failed to read config file: %w", err)

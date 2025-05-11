@@ -7,7 +7,7 @@ import (
 
 func NewServer(port int) *http.Server {
 	server := &http.Server{
-		Addr:    fmt.Sprintf(":%s", port),
+		Addr:    fmt.Sprintf(":%d", port),
 		Handler: nil,
 	}
 	http.HandleFunc("/", helloWorld)
