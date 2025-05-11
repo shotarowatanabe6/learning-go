@@ -15,9 +15,8 @@ type Logger struct {
 
 func NewLogger() *Logger {
 	zerolog.ErrorStackMarshaler = pkgerrors.MarshalStack
-	logger := zerolog.New(os.Stdout).
-		Level(zerolog.InfoLevel).
-		Output(zerolog.ConsoleWriter{Out: os.Stderr, TimeFormat: time.RFC3339Nano})
+	zerolog.TimeFieldFormat = time.RFC3339Nano
+	logger := zerolog.New(os.Stdout).Level(zerolog.InfoLevel)
 	return &Logger{logger}
 }
 
@@ -60,25 +59,25 @@ func (l *Logger) Warnf(format string, v ...any) {
 }
 
 func (l *Logger) Error(err error) {
-	l.Logger.Error().Stack().Err(err).Msg("")
+	l.Logger.Error().Err(err).Msg("")
 }
 
-func (l *Logger) Errorf(msg string, err error) {
-	l.Logger.Error().Stack().Err(err).Msg(msg)
+func (l *Logger) Errorf(format string, v ...any) {
+	l.Logger.Error().Msgf(format, v...)
 }
 
 func (l *Logger) Fatal(err error) {
-	l.Logger.Fatal().Stack().Err(err).Msg("")
+	l.Logger.Fatal().Err(err).Msg("")
 }
 
-func (l *Logger) Fatalf(msg string, err error) {
-	l.Logger.Fatal().Stack().Err(err).Msg(msg)
+func (l *Logger) Fatalf(format string, v ...any) {
+	l.Logger.Fatal().Msgf(format, v...)
 }
 
 func (l *Logger) Panic(err error) {
-	l.Logger.Panic().Stack().Err(err).Msg("")
+	l.Logger.Panic().Err(err).Msg("")
 }
 
-func (l *Logger) Panicf(msg string, err error) {
-	l.Logger.Panic().Stack().Err(err).Msg(msg)
+func (l *Logger) Panicf(format string, v ...any) {
+	l.Logger.Panic().Msgf(format, v...)
 }
