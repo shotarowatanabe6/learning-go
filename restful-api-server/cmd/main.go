@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"restful-api-server/internal/api"
+	"restful-api-server/internal/config"
 )
 
 func main() {
@@ -12,7 +13,7 @@ func main() {
 	configFilePath := flag.String("config", "config/local.tml", "config file path")
 	flag.Parse()
 
-	config, err := api.NewConfig(*configFilePath)
+	config, err := config.NewConfig(*configFilePath)
 	if err != nil {
 		log.Fatalf("failed to read config file: %v", err)
 		return

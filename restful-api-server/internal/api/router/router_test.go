@@ -9,9 +9,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var lg = logger.NewLogger()
-
 func Test_helloWorld(t *testing.T) {
+	var lg = logger.NewLogger()
 	type want struct {
 		statusCode int
 		body       string
@@ -31,7 +30,7 @@ func Test_helloWorld(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			gin.SetMode(gin.TestMode)
-			router := NewRouter(lg)
+			router := NewRouter(lg, nil)
 
 			w := httptest.NewRecorder()
 			req, _ := http.NewRequest("GET", "/", nil)

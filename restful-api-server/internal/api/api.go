@@ -3,25 +3,30 @@ package api
 import (
 	"fmt"
 	"restful-api-server/internal/api/router"
+	"restful-api-server/internal/config"
+	"restful-api-server/internal/service"
 	"restful-api-server/pkg/logger"
 
 	"github.com/gin-gonic/gin"
 )
 
 type API struct {
-	config *Config
-	logger *logger.Logger
-	router *gin.Engine
+	config  *config.Config
+	logger  *logger.Logger
+	router  *gin.Engine
+	service *service.Service
 }
 
-func NewAPI(config *Config) *API {
+func NewAPI(config *config.Config) *API {
 	logger := logger.NewLogger().WithLevel(config.Logger.Level)
-	router := router.NewRouter(logger)
+	svc := service.NewService(config)
+	router := router.NewRouter(logger, svc)
 
 	return &API{
-		config: config,
-		logger: logger,
-		router: router,
+		config:  config,
+		logger:  logger,
+		router:  router,
+		service: svc,
 	}
 }
 

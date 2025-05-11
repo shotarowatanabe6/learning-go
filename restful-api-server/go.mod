@@ -4,6 +4,7 @@ go 1.22.1
 
 require (
 	github.com/gin-gonic/gin v1.10.0
+	github.com/lib/pq v1.10.9
 	github.com/rs/zerolog v1.34.0
 	github.com/spf13/viper v1.20.1
 )
